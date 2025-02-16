@@ -1,0 +1,2399 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center; /* Center main horizontally */
+  align-items: center; /* Center main vertically */
+}
+main {
+  width: 100vw; /* Occupy full width */
+  height: 100vh; /* Occupy full height of the viewport */
+  text-align: center; /* Center text alignment */
+  display: flex; /* Use flexbox for centering */
+  flex-direction: column; /* Stack children vertically */
+  justify-content: center; /* Center content vertically */
+  align-items: center; /* Center content horizontally */
+  overflow: hidden;
+}
+
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* Navbar */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(230, 229, 229, 0.9);
+  padding: 15px 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: center; /* Center navbar items on large screens */
+  align-items: center;
+  position: relative;
+}
+
+/* Navbar Links */
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 3rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  color: #967259;
+  font-weight: bold;
+  font-size: 1.2rem;
+  transition: color 0.3s ease-in-out;
+}
+
+.nav-links li a:hover {
+  color: #38200f;
+}
+
+/* Hamburger Menu (Hidden on Large Screens) */
+.nav-icon {
+  display: none;
+  font-size: 2rem;
+  cursor: pointer;
+  position: absolute;
+  right: 20px; /* Position it on the right side */
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .nav-icon {
+    display: block;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 14px;
+    left: 0;
+    width: 100%;
+    background: rgba(230, 229, 229, 0.95);
+    flex-direction: column;
+    text-align: center;
+    display: none;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .nav-links li {
+    padding: 15px 0;
+  }
+}
+/* Food-Page(What's on your Mind) */
+.menu-container {
+  position: absolute; /* Fix overlapping issue */
+  top: 7%;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  padding: 15px 0;
+  background-color: #f1ebe5;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+.menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 0 20px;
+}
+.menu-heading {
+  font-size: 2rem;
+  color: #634832;
+  margin: 0;
+  font-weight: bold;
+  /* text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6); */
+}
+.menu-btn-container {
+  display: flex;
+  gap: 15px;
+}
+.menu-btn {
+  background-color: #f9f4ee;
+  color: #000000;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+.menu-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.menu-btn:hover:not(:disabled) {
+  background-color: #967259;
+  color: white;
+}
+.menu-slider {
+  display: flex;
+  gap: 100px; /* Increased gap between items */
+  overflow-x: auto; /* Scroll remove karne ke liye */
+  scroll-behavior: smooth;
+  padding: 0 20px;
+  white-space: nowrap; /* Items ko ek hi line me rakhne ke liye */
+  transition: transform 2s ease; /* Smooth slide effect */
+}
+.menu-slider.sliding {
+  transform: translateX(0); /* Trigger CSS transition for sliding */
+}
+.menu-item img {
+  /* width: 100%; */
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+@media (max-width: 600px) {
+  /* Fix the header so that it doesn't scroll with the slider */
+  .menu-header {
+    position: sticky !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #f1ebe5; /* same as container background */
+    z-index: 100;
+  }
+
+  /* Override slider styles for natural horizontal scrolling */
+  .menu-slider {
+    transform: none !important;
+    width: 100% !important;
+    overflow-x: auto !important;
+    gap: 20px !important;      /* kam gap for mobile view */
+    padding: 0 10px !important; /* kam padding for mobile view */
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Ensure that each menu item snaps into view */
+  .menu-item {
+    scroll-snap-align: start !important;
+  }
+
+  /* Hide navigation buttons on mobile */
+  .menu-btn-container {
+    display: none !important;
+  }
+}
+@media (min-width: 600px) and (max-width: 1280px) {
+  /* For screens between 600px and 1280px, we want the slider to behave like desktop */
+  .menu-slider {
+    /* Use a fixed gap of 100px between images and retain horizontal padding */
+    gap: 100px !important;
+    padding: 0 20px !important;
+    overflow-x: hidden !important; /* Ensure slider movement is only via buttons */
+    /* The transform is applied via inline styles from React so we do not override it here */
+  }
+
+  /* Responsive image sizing for the slider items */
+  .menu-item img {
+    /*
+      Calculation details:
+      - Total container horizontal padding: 20px (left) + 20px (right) = 40px.
+      - For 7 images visible, there are 6 gaps. With a 100px gap, total gap width = 6 * 100px = 600px.
+      - Total deduction from viewport width = 40px + 600px = 640px.
+      - Ideal image width (before scaling) = (100vw - 640px) / 7.
+      - Multiplying by 0.9 makes the images slightly smaller to leave extra breathing room.
+      - The clamp() ensures the image size never drops below 80px or goes above 120px.
+    */
+    width: clamp(80px, calc(((100vw - 640px) / 7) * 0.9), 120px) !important;
+    height: clamp(80px, calc(((100vw - 640px) / 7) * 0.9), 120px) !important;
+    max-width: none !important;
+    max-height: none !important;
+  }
+}
+
+/* Food Section */
+.food-section-container {
+  position: absolute; /* Keeps it in normal document flow */
+  right: 0;
+  left: 0;
+  top: 0;
+  margin-top: 10%; /* Ensures it stays below the menu-container */
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+  
+}
+
+.food-section {
+  width: 100vw;
+  background: #f1ebe5;
+  padding: 70px 20px;
+  text-align: center;
+  min-height: 100vh; 
+  flex-grow: 1;
+}
+.section-heading {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #38200f;
+  text-align: center;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  position: relative;
+  display: inline-block;
+}
+.section-heading::after{
+  content: "";
+  width: 80px;
+  height: 5px;
+  background-color: #634832;
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 10px;
+}
+
+/* Main category name (outside container)  */
+.food-main-category {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #634832;
+  text-align: left;
+  margin: 40px auto 10px;
+  width: 100%;
+  max-width: 900px;
+  border-bottom: 3px solid #967259;
+  padding-bottom: 8px;
+}
+
+/* Food category container */
+.food-category {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100vw;
+  max-width: 900px;
+  margin: 15px auto;
+  padding: 20px;
+  background-color: #f9f4ee;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.344);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.food-category:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.food-category-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  width: 60%;
+}
+.food-item-name {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #38200f;
+}
+.food-description {
+  font-size: 1rem;
+  color: #634832;
+}
+.food-category-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 10px;
+  object-fit: cover;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+/* Responsive Design */
+
+
+@media screen and (min-width: 768px) {
+  .menu-container {
+    top: 3%;
+    padding: 40px 0;
+  }
+  .menu-heading {
+    font-size: 1.8rem; /* Adjust font size for tablets */
+  }
+  .menu-item img {
+    width: 100px; /* Reduce image size */
+    height: 100px;
+  }
+  .food-category {
+    width: 100%; 
+    padding: 15px;
+  }
+  .food-section-container{
+    top: 6%;
+    /* padding: 10px; */
+  }
+  .section-heading {
+    margin-top: 7%;
+    font-size: 3rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .menu-item img {
+    width: 100px; /* Reduce image size */
+    height: 100px;
+  }
+
+  .menu-container {
+    top: 2%;
+    padding: 40px 0;
+  }
+  .menu-heading {
+    font-size: 1.6rem; /* Adjust font size for tablets */
+  }
+ 
+ 
+  .food-section-container{
+    margin-top: 13%;
+    top: 10%;
+  }
+
+  .section-heading {
+    margin-top: 10%;
+    font-size: 1.9rem;
+  }
+
+  .food-main-category {
+    font-size: 1.8rem;
+    text-align: left;
+    padding-bottom: 6px;
+    width: auto;
+    margin-left: 10px; 
+  }
+
+  .food-category {
+    flex-direction: row; /* Keeps text on left & image on right */
+    align-items: center;
+    width: 100%; /* Reduce width for better alignment */
+    padding: 15px;
+  }
+
+  .food-category-left {
+    width: 65%; /* Adjusted for better layout */
+  }
+
+  .food-item-name {
+    font-size: 1.3rem;
+  }
+
+  .food-description {
+    font-size: 0.95rem;
+  }
+
+  .food-category-image {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .menu-item img {
+    width: 70px; /* Reduce image size */
+    height: 70px;
+  }
+  
+  .menu-container {
+    top: 0;
+  }
+  .menu-heading {
+    font-size: 1.5rem; /* Adjust font size for tablets */
+  }
+
+  
+  .section-heading {
+    margin-top: 15%;
+    font-size: 1.5rem;
+  }
+  .food-section-container{
+    padding: 0;
+    margin-top: 10%;
+    top: 10%;
+  }
+
+  .food-main-category {
+    text-align: left;
+    font-size: 1.5rem;
+    width: auto;
+    margin-left: 10px; 
+  }
+
+  .food-category {
+    flex-direction: row; /* Stack text above image */
+    align-items: center;
+    text-align: center;
+    width: 100%; /* Reduce width for better alignment */
+    padding: 15px;
+  }
+
+  .food-category-left {
+    width: 100%;
+    /* align-items: center; */
+  }
+
+  .food-item-name {
+    font-size: 1.2rem;
+  }
+
+  .food-description {
+    font-size: 0.9rem;
+  }
+
+  .food-category-image {
+    width: 90px;
+    height: 90px;
+    margin-top: 10px;
+  }
+}
+
+
+/* Home.jsx Page*/
+.home-text-content {
+  position: absolute;
+  top: 55%; /* Adjusted for better centering */
+  left: 50%; /* Center the container */
+  transform: translate(-50%, -50%);
+  color: #f1ebe5;
+  z-index: 2;
+  padding: 30px;
+  border-radius: 20px;
+  width: 100%; /* Set a flexible width */
+  max-width: 48%; /* Increased max-width for better spacing */
+  /* background: rgba(0, 0, 0, 0.7); */
+}
+
+@keyframes typewriter {
+  0% {
+    width: 0;
+  }
+  50% {
+    width: 100%;
+  }
+  80% {
+    width: 100%;
+  }
+  100% {
+    width: 0;
+  }
+}
+
+@keyframes blinkCursor {
+  50% {
+    border-color: transparent;
+  }
+}
+
+.home-text-content h1 {
+  font-size: 4rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 3px solid #f1ebe5;
+  display: inline-block;
+  width: 100%;
+  animation: typewriter 5s steps(60, end) infinite, blinkCursor 0.7s infinite;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+.home-text-content p {
+  font-size: 1.6rem;
+  font-weight: 400;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+  margin-bottom: 15px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.5;
+  color: #f1ebe5 !important;
+}
+
+/* Updated Button Styling */
+.explore-btn {
+  background-color: #f9f4ee;
+  color: #000000;
+  padding: 12px 24px;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 25px;
+  transition: background 0.3s ease, transform 0.2s;
+  text-transform: uppercase;
+
+}
+
+.explore-btn:hover {
+  background-color: #634832;
+  color: white;
+  transform: scale(1.05);
+}
+
+
+.image-slider {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* Ensures full viewport height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; /* Stacks text and image vertically */
+  overflow: hidden;
+}
+
+.image-box {
+  width: 100vw;
+  height: auto;
+}
+
+
+.image-box img {
+  width: 100%; /* Set width to 100% of its container */
+  height: 100%; /* Set height to 100% of its container */
+  object-fit: cover; /* Ensures the image covers the entire container proportionally */
+  object-position: center; /* Centers the image within the container */
+}
+.slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.341);
+  color: #ece0d1;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+.slider-btn:first-of-type {
+  left: 20px;
+}
+.slider-btn:last-of-type {
+  right: 20px;
+}
+
+.cards-section {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 100px;
+  padding: 15px;
+  background-color: #f1ebe5;
+  width: 100vw;
+}
+
+.card {
+  position: relative;
+  border-radius: 50%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  width: 150px;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Image default state (no filter applied) */
+.card img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: filter 0.3s ease;
+}
+
+/* Image brightness change only on hover */
+.card:hover img {
+  filter: brightness(0.5);
+}
+
+/* Hide text initially */
+.card h3 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1rem;
+  color: #ece0d1;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  width: 75px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Show text only on hover */
+.card:hover h3 {
+  opacity: 1;
+}
+
+
+/* ===== Mobile Responsive Overrides (max-width: 600px) ===== */
+@media only screen and (max-width: 600px) {
+  /* Allow scrolling so that the cards section is visible after the image slider */
+  main {
+    height: auto !important;
+    min-height: 100vh;
+    overflow-y: auto;
+  }
+
+  /* Ensure the image slider fills the full viewport height in portrait view */
+  .image-slider {
+    margin-top: 0;
+    height: 100vh;
+  }
+  .image-box {
+    height: 100vh;
+  }
+  /* The img settings (object-fit: cover; object-position: center) in your existing CSS ensure the image covers properly */
+
+  /* Center the home text content on the screen */
+  .home-text-content {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 80%;
+    padding: 10px;
+  }
+  .home-text-content h1 {
+    font-size: 2rem;
+  }
+  .home-text-content p {
+    font-size: 1rem;
+  }
+
+  /* Hide slider buttons on mobile if needed */
+  .slider-btn {
+    display: flex;               /* Show the buttons */
+    width: 40px;                 /* Slightly smaller button size */
+    height: 40px;
+    font-size: 16px;             /* Adjust font size for mobile */
+    background-color: rgba(0, 0, 0, 0.5); /* Darker background for better contrast */
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    border-radius: 50%;          /* Keep circular shape */
+    color: #ece0d1;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    cursor: pointer;
+  }
+  .slider-btn:first-of-type {
+    left: 10px;                  /* Position the left button a bit inset */
+  }
+  .slider-btn:last-of-type {
+    right: 10px;                 /* Position the right button a bit inset */
+  }
+
+  /* Cards Section: display cards in 2 rows with 3 cards per row */
+  .cards-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+    padding: 10px;
+    justify-content: center;
+  }
+  
+  /* Make each card a perfect circle by using aspect-ratio */
+  .cards-section .card {
+    width: calc(27% - 10px);
+    /* Remove the fixed height and use aspect-ratio to force a square */
+    height: auto;
+    aspect-ratio: 1 / 1;
+    border-radius: 50% !important;
+    position: relative;
+    overflow: hidden;
+  }
+  .cards-section .card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50% !important;
+  }
+  .cards-section .card h3 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.7rem;
+    color: #ece0d1;
+    width: 75%;
+    text-align: center;
+  }
+}
+
+/* ===== Tablet Responsive Styles (min-width: 601px and max-width: 768px) ===== */
+@media only screen and (min-width: 601px) and (max-width: 768px) {
+  /* Ensure main starts at the top so that the image-slider attaches to the navbar */
+  main {
+    justify-content: flex-start;
+    height: auto !important;
+    min-height: 100vh;
+    overflow-y: auto;
+  }
+
+  /* Remove gap above the image-slider and make it fill the viewport height */
+  .image-slider {
+    margin-top: 0;
+    height: 100vh;
+  }
+  .image-box {
+    height: 100vh;
+  }
+
+  /* Center home text content exactly like on mobile */
+  .home-text-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 83%;
+    padding: 10px;
+  }
+  .home-text-content h1 {
+    font-size: 3rem;
+  }
+  .home-text-content p {
+    font-size: 1rem;
+  }
+
+  /* Cards Section: arrange cards so that they are perfectly circular */
+  .cards-section {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;  /* Centers the container */
+    gap: 60px;       /* Adjust gap between cards */
+    padding: 10px;
+    justify-content: center;
+  }
+  .cards-section .card {
+    width: calc(25% - 10px) !important;
+    /* Keep the card perfectly square and circular */
+    height: auto;
+    aspect-ratio: 1 / 1;
+    border-radius: 50% !important;
+    position: relative;
+    overflow: hidden;
+  }
+  .cards-section .card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50% !important;
+  }
+  .cards-section .card h3 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.8rem;
+    color: #ece0d1;
+    width: 80%;
+    text-align: center;
+  }
+}
+
+@media only screen and (min-width: 769px) and (max-width: 1280px) {
+  /* Ensure the main container starts at the top and allows scrolling if needed */
+  main {
+    justify-content: flex-start;
+    height: auto;
+    min-height: 100vh;
+    overflow-y: auto;
+  }
+
+  /* Make sure the image-slider attaches to the navbar without any top gap */
+  .image-slider {
+    margin-top: 0;
+    height: 100vh;
+  }
+  .image-box {
+    height: 100vh;
+  }
+
+  /* Center the home text content within the image-slider */
+  .home-text-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 88%;
+    padding: 20px;
+  }
+  .home-text-content h1 {
+    font-size: 4rem;
+  }
+  .home-text-content p {
+    font-size: 1.2rem;
+  }
+
+  
+
+  /* Reduce the overall width of the cards-section container */
+  .cards-section {
+    margin: 0 auto;
+    gap: 60px;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  /* Style each card so that it is smaller and remains perfectly circular */
+  .cards-section .card {
+    width: calc(23% - 15px);
+    height: auto;             /* Remove any fixed height */
+    aspect-ratio: 1 / 1;       /* Force a square shape */
+    border-radius: 50% !important;
+    position: relative;
+    overflow: hidden;
+  }
+  .cards-section .card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50% !important;
+  }
+  .cards-section .card h3 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1rem;
+    color: #ece0d1;
+    width: 80%;
+    text-align: center;
+  }
+
+  /* Hide slider buttons on mobile if needed */
+  .slider-btn {
+    display: flex;               /* Show the buttons */
+    width: 50px;                 /* Slightly smaller button size */
+    height: 50px;
+    font-size: 16px;             /* Adjust font size for mobile */
+    background-color: rgba(0, 0, 0, 0.5); /* Darker background for better contrast */
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    border-radius: 50%;          /* Keep circular shape */
+    color: #ece0d1;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    cursor: pointer;
+  }
+  .slider-btn:first-of-type {
+    left: 10px;                  /* Position the left button a bit inset */
+  }
+  .slider-btn:last-of-type {
+    right: 10px;                 /* Position the right button a bit inset */
+  }
+}
+
+
+
+
+
+
+/* Food Categories */
+
+.food-main{
+  width: 100vw; /* Full width of the viewport */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+.food-categories {
+  width: 100%;
+  max-width: 100%;
+  padding: 61px 0px; /* Space from the navbar */
+  background-color: #f1ebe5;
+  text-align: center;
+  overflow-x: hidden;
+}
+.food-categories h2 {
+  font-size: 2.8rem;
+  font-weight: bold;
+  color: #38200f;
+  margin: 70px auto;
+  position: relative;
+  display: inline-block;
+}
+.food-categories h2::after {
+  content: "";
+  width: 80px;
+  height: 5px;
+  background-color: #634832;
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 10px;
+}
+.food-cards-section {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+  width: 100%;
+  margin: auto;
+}
+.food-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f9f4ee;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  max-width: 67%;
+  padding: 50px;
+}
+.food-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+.food-card img {
+  width: 40%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 15px;
+}
+.food-card-content {
+  width: 55%;
+  padding: 20px;
+  text-align: left;
+}
+.food-card-content h3 {
+  font-size: 1.8rem;
+  color: #38200f;
+  margin-bottom: 10px;
+}
+.food-card-content p {
+  font-size: 1rem;
+  color: #666;
+}
+.food-card:nth-child(even) {
+  flex-direction: row-reverse;
+}
+
+.back-btn {
+  margin-top: 40px;
+  background-color: #634832;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 25px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: 0.3s ease;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+.back-btn:hover {
+  background-color: #f1ebe5;
+  transform: scale(1.05);
+  color: #000000;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+
+/* ===== Mobile Responsive Styles (max-width: 600px) ===== */
+@media only screen and (max-width: 600px) {
+  /* Overall container and heading */
+  .food-categories {
+    padding: 30px 0; /* Less vertical padding */
+  }
+  .food-categories h2 {
+    font-size: 2rem;
+    margin: 80px auto;
+  }
+  .food-categories h2::after {
+    width: 60px;
+    height: 4px;
+    bottom: -10px;
+  }
+  
+  /* Food cards section */
+  .food-cards-section {
+    gap: 20px;
+    padding: 0 10px;
+  }
+  
+  /* Each food card arranged vertically */
+  .food-card {
+    display: flex;
+    flex-direction: column !important;  /* Force vertical stacking */
+    max-width: 90%;
+    padding: 20px;
+  }
+  /* Ensure alternate styling is overridden */
+  .food-card:nth-child(even) {
+    flex-direction: column !important;
+  }
+  
+  .food-card img {
+    width: 100%;
+    height: auto;
+    max-height: 200px; /* Limit image height */
+    margin-bottom: 20px;
+    border-radius: 15px;
+  }
+  .food-card-content {
+    width: 100%;
+    padding: 10px;
+    text-align: center;  /* Center text for mobile */
+  }
+  .food-card-content h3 {
+    font-size: 1.5rem;
+  }
+  .food-card-content p {
+    font-size: 0.9rem;
+  }
+  
+  /* Back button styling */
+  .back-btn {
+    font-size: 1rem;
+    padding: 10px 20px;
+    margin-top: 20px;
+  }
+}
+
+/* ===== Tablet Responsive Styles (min-width: 601px and max-width: 768px) ===== */
+@media only screen and (min-width: 601px) and (max-width: 768px) {
+  /* Container and heading adjustments */
+  .food-categories {
+    padding: 40px 0;
+  }
+  .food-categories h2 {
+    font-size: 3rem;
+    margin: 50px auto;
+  }
+  .food-categories h2::after {
+    width: 70px;
+    height: 4px;
+    bottom: -8px;
+  }
+  
+  /* Food cards section layout */
+  .food-cards-section {
+    gap: 25px;
+    padding: 0 20px;
+  }
+  
+  /* Force vertical arrangement for all food cards */
+  .food-card {
+    display: flex;
+    flex-direction: column !important;  /* Override any row styling */
+    max-width: 85%;
+    padding: 30px;
+  }
+  /* Remove alternating layout on even-numbered cards */
+  .food-card:nth-child(even) {
+    flex-direction: column !important;
+  }
+  
+  .food-card img {
+    width: 100%;
+    height: auto;
+    max-height: 220px;
+    margin-bottom: 20px;
+    border-radius: 15px;
+  }
+  .food-card-content {
+    width: 100%;
+    padding: 15px;
+    text-align: center;
+  }
+  .food-card-content h3 {
+    font-size: 1.6rem;
+  }
+  .food-card-content p {
+    font-size: 1rem;
+  }
+  
+  /* Back button styling */
+  .back-btn {
+    font-size: 1.1rem;
+    padding: 12px 25px;
+    margin-top: 30px;
+  }
+}
+
+/* ===== Medium to Large Screens (min-width: 769px and max-width: 1280px) ===== */
+@media only screen and (min-width: 769px) and (max-width: 1280px) {
+  /* Adjust container and heading */
+  .food-categories {
+    padding: 50px 0;
+  }
+  .food-categories h2 {
+    font-size: 2.8rem;
+    margin: 60px auto;
+  }
+  .food-categories h2::after {
+    width: 80px;
+    height: 4px;
+    bottom: -10px;
+  }
+  
+  /* Adjust the food cards section layout */
+  .food-cards-section {
+    gap: 30px;
+    padding: 0 30px;
+  }
+  
+  /* Set up a two-column flex layout for each food card */
+  .food-card {
+    display: flex;
+    flex-direction: row; /* default: image left, text right */
+    align-items: center;
+    justify-content: space-between;
+    padding: 40px;
+    max-width: 100%;
+  }
+  
+  /* For even numbered cards, reverse the row so image appears on the right */
+  .food-card:nth-child(even) {
+    flex-direction: row-reverse;
+  }
+  
+  /* Image styling for the two-column layout */
+  .food-card img {
+    width: 50%;
+    height: auto;
+    max-height: 300px;
+    border-radius: 15px;
+    /* Adjust spacing: add right margin for odd cards and left margin for even cards */
+    margin-right: 20px;
+  }
+  
+  /* When the card is reversed, override the margin settings */
+  .food-card:nth-child(even) img {
+    margin-right: 0;
+    margin-left: 20px;
+  }
+  
+  /* Text content styling */
+  .food-card-content {
+    width: 50%;
+    padding: 20px;
+  }
+  .food-card-content h3 {
+    font-size: 2rem;
+  }
+  .food-card-content p {
+    font-size: 1.1rem;
+  }
+  
+  /* Back button styling */
+  .back-btn {
+    font-size: 1.2rem;
+    padding: 14px 30px;
+    margin-top: 40px;
+  }
+}
+
+
+/*About Us*/
+.about-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw; /* Full width */
+  min-height: 100vh;
+  background-color: #f1ebe5;
+  text-align: center;
+  overflow-x: hidden;
+  padding: 90px 0;
+}
+.hero-section {
+  width: 250px; /* Fixed size */
+  height: 250px; 
+  overflow: hidden;
+  position: relative;
+  border-radius: 50%;
+}
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: fadeIn 1.5s ease-in-out;
+}
+.intro-text {
+  margin: 40px 0;
+  text-align: center;
+}
+
+.intro-text h2 {
+  font-size: 32px;
+  color: #38200f;
+  position: relative;
+  display: inline-block;
+}
+.intro-text h2::after{
+  content: "";
+  width: 80px;
+  height: 5px;
+  background-color: #634832;
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 20px;
+}
+.intro-text p {
+  font-size: 18px;
+  color: #666;
+  max-width: 600px;
+  margin-top: 5%;
+}
+
+
+.about-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+
+.about-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  padding: 30px;
+  background: #f9f4ee;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 55%;
+}
+.about-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+.about-item:nth-child(odd) {
+  flex-direction: row;
+}
+.about-item:nth-child(even) {
+  flex-direction: row-reverse;
+}
+.about-item img {
+  width: 100%;
+  max-width: 35%;
+  height: auto;
+  border-radius: 20px;
+  transition: transform 0.3s ease-in-out;
+  display: block;
+}
+
+.about-item img:hover {
+  transform: scale(1.1);
+}
+.text-content {
+  flex: 1;
+  text-align: left;
+  max-width: 450px;
+}
+.text-content h3 {
+  font-size: 2.5rem;
+  color: #38200f;
+  margin-bottom: 10px;
+}
+.text-content p {
+  font-size: 1rem;
+  color: #666;
+}
+/* Fade-in Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ======================
+   Mobile Responsive Styles (max-width: 600px)
+   ====================== */
+   @media only screen and (max-width: 600px) {
+    .about-container {
+      padding: 30px 0;
+    }
+    
+    /* Make the hero section wider on mobile */
+    .hero-section {
+      width: 150px;
+      height: 150px;
+      margin-top: 10%;
+      
+    }   
+    
+    .intro-text h2 {
+      font-size: 1.8rem;
+    }
+    
+    .intro-text h2::after {
+      width: 60px;
+      height: 4px;
+      bottom: -8px;
+    }
+    
+    .intro-text p {
+      font-size: .9rem;
+      padding: 0 10px;
+   
+    }
+    
+    .about-sections {
+      width: 100%;
+      max-width: 90%;
+      gap: 20px;
+      padding: 0 10px;
+    }
+    
+    /* Force vertical stacking for all about items */
+    .about-item {
+      display: flex;
+      flex-direction: column !important;
+      align-items: center;
+      padding: 20px;
+      width: 100%;
+      max-width: 95%;
+    }
+    .about-item:nth-child(even) {
+      flex-direction: column !important;
+    }
+    
+    .about-item img {
+      width: 100%;  /* Make it responsive */
+      max-width: 125px;  /* Allow it to grow beyond 130px */
+      height: auto;
+      display: block;
+    }
+    
+    .text-content {
+      text-align: center;
+      max-width: 100%;
+    }
+    
+    .text-content h3 {
+      font-size: 1.6rem;
+    }
+    
+    .text-content p {
+      font-size: .8rem;
+    }
+    
+    .back-btn {
+      font-size: 1rem;
+      padding: 10px 20px;
+      margin-top: 20px;
+    }
+  }
+  
+  /* ======================
+     Tablet Responsive Styles (min-width: 601px and max-width: 768px)
+     ====================== */
+  @media only screen and (min-width: 601px) and (max-width: 768px) {
+    .about-container {
+      padding: 40px 0;
+    }
+    
+    .hero-section {
+      width: 240px;
+      height: 240px;
+      margin-top: 10%;
+    }
+    
+    .intro-text h2 {
+      font-size: 2.4rem;
+    }
+    
+    .intro-text h2::after {
+      width: 70px;
+      height: 4px;
+      bottom: -8px;
+    }
+    
+    .intro-text p {
+      font-size: 1.2rem;
+      padding: 0 20px;
+    }
+    
+    .about-sections {
+      width: 100%;
+      max-width: 90%;
+      gap: 25px;
+      padding: 0 20px;
+    }
+    
+    /* Still stacking about items vertically on tablet */
+    .about-item {
+      display: flex;
+      flex-direction: column !important;
+      align-items: center;
+      padding: 30px;
+      width: 100%;
+      max-width: 80%; 
+    }
+    .about-item:nth-child(even) {
+      flex-direction: column !important;
+    }
+    
+    .about-item img {
+      width: 100%;  /* Make it responsive */
+      max-width: 180px;  /* Allow it to grow beyond 130px */
+      height: auto;
+      display: block;
+    }
+    
+    .text-content {
+      text-align: center;
+      max-width: 100%;
+    }
+    
+    .text-content h3 {
+      font-size: 1.8rem;
+    }
+    
+    .text-content p {
+      font-size: .9rem;
+    }
+    
+    .back-btn {
+      font-size: 1.1rem;
+      padding: 12px 25px;
+      margin-top: 30px;
+    }
+  }
+  
+  /* ======================
+     Medium to Large Screens (min-width: 769px and max-width: 1280px)
+     ====================== */
+  @media only screen and (min-width: 769px) and (max-width: 1280px) {
+    .about-container {
+      padding: 50px 0;
+    }
+    
+    .hero-section {
+      width: 300px;
+      height: 300px;
+      margin-top: 10%;
+    }
+
+    .intro-text{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    
+    .intro-text h2 {
+      font-size: 2.8rem;
+    }
+    
+    .intro-text h2::after {
+      width: 80px;
+      height: 4px;
+      bottom: -10px;
+    }
+    
+    .intro-text p {
+      font-size: 1.2rem;
+    }
+    
+    .about-sections {
+      gap: 30px;
+      padding: 0 50px;
+    }
+    
+    /* Restore alternating layout for about items */
+    .about-item {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 20px;
+      width: 100%;
+      max-width: 90%;
+    }
+    .about-item:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+    
+    .about-item img {
+      width: 100%;
+      max-width: 250px;
+      height: auto;
+      display: block;
+    }
+    
+    .text-content {
+      width: 100%;
+      text-align: left;
+      padding: 10px;
+    }
+    
+    .text-content h3 {
+      font-size: 2rem;
+    }
+    
+    .text-content p {
+      font-size: 1rem;
+    }
+    
+    .back-btn {
+      font-size: 1.2rem;
+      padding: 14px 30px;
+      margin-top: 40px;
+    }
+  }
+
+/* Customer-Reviews */
+.customer-reviews-container {
+  width: 100vw; /* Full width */
+  padding: 120px 20px; /* Space from the navbar */
+  background-color: #f1ebe5;
+  text-align: center;
+  min-height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: hidden;
+}
+/* Heading */
+.review-heading {
+  font-size: 2.3rem;
+  color: #38200f;
+  margin-bottom: 50px;
+  position: relative;
+  display: inline-block;
+}
+
+.review-heading::after{
+  content: "";
+  width: 80px;
+  height: 5px;
+  background-color: #634832;
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 10px;
+}
+.customer-reviews {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  width: 100%;
+  max-width: 850px;
+}
+
+/* Individual Review Item */
+.review-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  padding: 20px;
+  background: #f9f4ee;
+  border-radius: 25px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.review-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Alternating Left-Right Positioning */
+.review-item:nth-child(odd) {
+  flex-direction: row;
+}
+
+.review-item:nth-child(even) {
+  flex-direction: row-reverse;
+}
+
+/* Image Styling */
+.review-img {
+  width: 250px;  /* Set a fixed size for better circular shape */
+  height: 250px; /* Same as width to make it a perfect circle */
+  max-width: 100%; 
+  border-radius: 50%; /* Makes the image circular */
+    object-fit: cover; 
+  transition: transform 0.3s ease-in-out;
+}
+
+.review-img:hover {
+  transform: scale(1.1);
+}
+
+/* Text Content */
+.review-text {
+  flex: 1;
+  text-align: left;
+  max-width: 600px;
+}
+
+.review-text h3 {
+  font-size: 3rem;
+  color: #38200f;
+  margin-bottom: 10px;
+}
+
+.review-text p {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* ======================
+   Mobile Responsive Styles (max-width: 600px)
+   ====================== */
+   @media only screen and (max-width: 600px) {
+    .customer-reviews-container {
+      padding: 30px 0;
+    }
+    
+    .review-heading {
+      font-size: 1.8rem;
+      margin: 80px auto;
+    }
+    
+    .customer-reviews {
+      width: 100%;
+      max-width: 90%;
+      gap: 20px;
+      padding: 0 10px;
+    }
+    
+    /* Force vertical stacking for all review items */
+    .review-item {
+      display: flex;
+      flex-direction: column !important;
+      align-items: center;
+      padding: 20px;
+    }
+    .review-item:nth-child(even) {
+      flex-direction: column !important;
+    }
+    
+    .review-img {
+      width: 120px;  /* Set a fixed size for better circular shape */
+      height: 120px; /* Same as width to make it a perfect circle */
+      max-width: 100%; 
+      border-radius: 50%; /* Makes the image circular */
+      object-fit: cover; 
+    }
+    
+    .review-text {
+      text-align: center;
+      max-width: 100%;
+    }
+    
+    .review-text h3 {
+      font-size: 1.6rem;
+    }
+    
+    .review-text p {
+      font-size: 0.8rem;
+    }
+    
+    .back-btn {
+      font-size: 1rem;
+      padding: 10px 20px;
+      margin-top: 20px;
+    }
+  }
+  
+  /* ======================
+     Tablet Responsive Styles (min-width: 601px and max-width: 768px)
+     ====================== */
+  @media only screen and (min-width: 601px) and (max-width: 768px) {
+    .customer-reviews-container {
+      padding: 40px 0;
+    }
+    
+    .review-heading {
+      font-size: 3rem;
+      margin: 50px auto;
+    }
+    
+    .customer-reviews {
+      width: 100%;
+      max-width: 90%;
+      gap: 30px;
+      padding: 0 20px;
+    }
+    
+    /* Still stacking review items vertically on tablet */
+    .review-item {
+      display: flex;
+      flex-direction: column !important;
+      align-items: center;
+      padding: 20px;
+    }
+    .review-item:nth-child(even) {
+      flex-direction: column !important;
+    }
+    
+    .review-img {
+      width: 170px;  /* Set a fixed size for better circular shape */
+    height: 170px; /* Same as width to make it a perfect circle */
+    max-width: 100%; 
+    border-radius: 50%; /* Makes the image circular */
+    object-fit: cover; 
+    }
+    
+    .review-text {
+      text-align: center;
+      max-width: 100%;
+    }
+    
+    .review-text h3 {
+      font-size: 1.8rem;
+    }
+    
+    .review-text p {
+      font-size: 0.9rem;
+    }
+    
+    .back-btn {
+      font-size: 1.1rem;
+      padding: 12px 25px;
+      margin-top: 30px;
+    }
+  }
+  
+  /* ======================
+     Medium to Large Screens (min-width: 769px and max-width: 1280px)
+     ====================== */
+  @media only screen and (min-width: 769px) and (max-width: 1280px) {
+    .customer-reviews-container {
+      padding: 50px 0;
+    }
+    
+    .review-heading {
+      font-size: 2.8rem;
+      margin: 60px auto;
+    }
+    
+    .customer-reviews {
+      width: 100%;
+      max-width: 90%;
+      gap: 30px;
+      padding: 0 50px;
+    }
+    
+    /* Restore alternating layout for review items */
+    .review-item {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 20px;
+    }
+    .review-item:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+    
+    .review-img {
+      width: 220px;  /* Set a fixed size for better circular shape */
+    height: 220px; /* Same as width to make it a perfect circle */
+    max-width: 100%; 
+    border-radius: 50%; /* Makes the image circular */
+    object-fit: cover; 
+    }
+
+    
+    .review-text {
+      width: 100%;
+      text-align: left;
+      padding: 10px;
+    }
+    
+    .review-text h3 {
+      font-size: 2rem;
+    }
+    
+    .review-text p {
+      font-size: 1rem;
+    }
+    
+    .back-btn {
+      font-size: 1.2rem;
+      padding: 14px 30px;
+      margin-top: 40px;
+    }
+  }
+  
+
+/* Offer Page*/
+.offers {
+  width: 100vw; /* Full width of the viewport */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  background: #f1ebe5; 
+}
+
+.offers-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: calc(20vw);          /* A fluid gap that scales with the viewport */
+  width: 100%;
+  max-width: 90%;          /* Keeps the container from stretching too wide on large screens */
+  margin: 0 auto;
+  position: relative;
+}
+.offers-text {
+  max-width: 70%;
+}
+
+.offers-text h2 {
+  margin: 0;
+  font-size: 2.3rem;
+  font-weight: bold;
+  color: #38200f;
+}
+
+.offers-text h2 span {
+  color: #967259;
+}
+
+.offers-text p {
+  font-size: 1rem;
+  color: #666;
+  margin: 3px;
+}
+
+
+.offers-buttons {
+  margin-top: 17px;
+}
+
+.btn {
+  background-color: #f1ebe5;
+  color: black;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: 0.3s ease;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+.btn:hover {
+  background-color: #38200f;
+  transform: scale(1.05);
+  color: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.offers-image img {
+  width: 330px;
+  height: auto;
+  border-radius: 15px;
+}
+
+.offers-cards {
+  position: relative;
+  top: 40px;
+  display: flex;
+  justify-content: center; /* Centers all cards */
+  align-items: stretch;    /* Ensures uniform height */
+  gap: 50px;               /* Adjusts spacing between cards */
+  flex-wrap: wrap;         /* Ensures responsiveness */
+  width: 100%;             /* Takes full width */
+  max-width: 100%;         /* Limits maximum width */
+}
+
+.offer-card {
+  background: #f9f4ee;
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);  
+  width: 100%;
+  min-height: 200px;       /* Uniform height */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Evenly distributes content */
+  align-items: center;
+  transition: all 0.3s ease-in-out;
+  flex: 1 1 calc(25% - 40px); /* Distributes evenly with gap */
+  max-width: calc(25% - 100px);  /* Fluid max-width based on container */
+}
+
+
+/* Image Styling */
+.offer-card img {
+  width: 105px;
+  height: 105px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Title Styling */
+.offer-card h3 {
+  font-size: 1.1rem;
+  color: #38200f;
+  margin: 10px 0;
+  font-weight: bold;
+  max-width: 180px;
+}
+
+/* Footer (Price Section) */
+.offer-card-footer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.offer-card-footer span {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #333;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 5px 12px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.offer-card {
+  position: relative; /* Ensures pseudo-element positions correctly */
+  transition: all 0.3s ease-in-out;
+}
+
+/* Box Shadow & Hover Animation */
+.offer-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 20px rgba(163, 131, 76, 0.147),
+    0 0 10px rgba(210, 255, 199, 0.59);
+  background: rgba(246, 243, 239, 0.863); /* Slightly more visible on hover */
+}
+
+/* Image Effect */
+.offer-card img {
+  transition: transform 0.3s ease-in-out;
+}
+
+.offer-card:hover img {
+  transform: scale(1.1);
+}
+
+/* Subtle Glow Effect */
+.offer-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  opacity: 0;
+  border-radius: inherit; /* Ensures it follows card's border-radius */
+  transition: opacity 0.3s ease-in-out;
+}
+
+.offer-card:hover::before {
+  opacity: 3;
+}
+
+/* ======================
+   Mobile Responsive Styles (max-width: 600px)
+   ====================== */
+   @media only screen and (max-width: 600px) {
+    /* Stack offers container in column with image first */
+
+    .offers-container {
+      flex-direction: column-reverse;  /* Reverses order: image comes first */
+      gap: 20px;
+      max-width: 90%;
+      min-height: 100vh;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto;
+    }
+  
+    /* Adjust offers-text for mobile */
+    .offers-text {
+      text-align: center;
+      max-width: 100%;
+    }
+    .offers-text h2 {
+      font-size: 2rem;
+      margin: 0 auto;
+    }
+    .offers-text p {
+      font-size: 0.8rem;
+    }
+  
+    /* Adjust offers-image for mobile */
+    .offers-image {
+      width: 100%;
+      text-align: center;
+    }
+    .offers-image img {
+      width: 100%;
+      max-width: 75%;
+      margin: 0 auto;
+    }
+  
+    /* Offers cards arranged in a single column */
+    .offers-cards {
+      top: 0;
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
+      margin-bottom: 10%;
+
+    }
+    .offer-card {
+      flex: none;
+      width: 100%;
+      max-width: 300px;
+    }
+    .offer-card h3{
+      font-size: 1.1rem;
+    }
+  }
+  
+  /* ======================
+     Tablet Responsive Styles (min-width: 601px and max-width: 768px)
+     ====================== */
+  @media only screen and (min-width: 601px) and (max-width: 768px) {
+    /* Stack offers container in column with image first */
+    .offers-container {
+      top: 10%;
+      flex-direction: column-reverse;  /* Image comes first */
+      gap: 20px;
+      max-width: 90%;
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto;
+    }
+  
+    /* Adjust offers-text for tablet */
+    .offers-text {
+      text-align: center;
+      max-width: 100%;
+    }
+    .offers-text h2 {
+      font-size: 2rem;
+      margin: 0 auto;
+    }
+    .offers-text p {
+      font-size: 1rem;
+    }
+  
+    /* Adjust offers-image for tablet */
+    .offers-image {
+      width: 100%;
+      text-align: center;
+    
+    }
+    .offers-image img {
+      width: 80%;
+      max-width: 320px;
+      margin: 0 auto;
+      
+    }
+    @keyframes rotateImage {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+    /* Offers cards arranged in a single column */
+    .offers-cards {
+      top: 0;
+      flex-direction: column;
+      gap: 25px;
+      align-items: center;
+      margin-bottom: 10%;
+    }
+    .offer-card {
+      flex: none;
+      width: 100%;
+      max-width: 320px;
+    }
+    .offer-card h3{
+      font-size: 1.1rem;
+    }
+  }
+  
+  /* ======================
+     Medium to Large Screens (min-width: 769px and max-width: 1280px)
+     ====================== */
+  @media only screen and (min-width: 769px) and (max-width: 1280px) {
+    /* Restore row layout for offers container */
+    .offers-container {
+      flex-direction: row;
+      gap: 40px;  /* Reduced gap compared to desktop default */
+      max-width: 80%;
+      justify-content: space-between;
+      align-items: center;
+      margin: 0 auto;
+    }
+  
+    /* Adjust offers-text for larger screens */
+    .offers-text {
+      max-width: 50%;
+      text-align: left;
+    }
+    .offers-text h2 {
+      font-size: 2.4rem;
+    }
+    .offers-text p {
+      font-size: 1rem;
+    }
+  
+    /* Adjust offers-image for larger screens */
+    .offers-image {
+      max-width: 50%;
+      display: flex;
+      justify-content: center;
+    }
+    .offers-image img {
+      width: 100%;
+      max-width: 350px;
+    }
+  
+    /* Offers cards arranged in a row (wrapping as needed) */
+    .offers-cards {
+      flex-direction: row;
+      gap: 30px;
+      justify-content: center;
+      padding: 0 30px;
+      flex-wrap: wrap;
+      
+    }
+    .offer-card {
+      flex: 1 1 calc(25% - 30px);
+      max-width: 240px;
+    }
+    
+
+    .offer-card h3{
+      font-size: .9rem;
+    }
+  }
+  
+
+/* Order Page.....*/
+.order {
+  display: flex;
+  justify-content: center; /* Centers horizontally */
+  align-items: center; /* Centers vertically */
+  width: 100vw;
+  height: 100vh;
+  background: #f1ebe5;
+}
+
+.order-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%; /* Adjust width as needed */
+  max-width: 1200px; /* Prevent excessive stretching */
+  gap: 60px; /* Space between sections */
+}
+
+.order-text {
+  max-width: 600px;
+}
+
+.order-text h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #38200f;
+}
+
+.order-text h2 span {
+  color: #634832
+  ;
+}
+
+.order-text p {
+  font-size: 1rem;
+  color: #666;
+  margin: 10px 0;
+}
+
+.order-buttons {
+  display: flex;
+  gap: 25px;
+  margin-top: 20px;
+}
+
+.ord-btn {
+  background-color: #634832;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: 0.3s ease;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+.ord-btn-green {
+  background: #38200f;
+  color: white;
+  border: none;
+}
+.ord-btn-green:hover {
+  background-color: #f1ebe5;
+  transform: scale(1.05);
+  color: #000000;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+
+.ord-btn-outline {
+  background: transparent;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  color: #38200f;
+}
+.ord-btn-outline:hover{
+  background-color: #f1ebe5;
+  transform: scale(1.1);
+  color: #000000;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.order-image img {
+  width: 350px;
+  height: auto;
+  border-radius: 50%;
+  animation: rotateImage 25s linear infinite;
+}
+
+@keyframes rotateImage {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .order-container {
+    flex-direction: column; /* Stack items in a column */
+    text-align: center;
+    gap: 30px;
+  }
+
+  .order-image {
+    margin-top: -70px;
+    order: -1; /* Moves the image above the text */
+  }
+
+  .order-image img {
+    width: 250px; /* Adjust image size for mobile */
+    max-width: 100%;
+  }
+
+  .order-text {
+    text-align: center; /* Center-align text */
+  }
+
+  .order-buttons {
+    flex-direction: column; /* Stack buttons on mobile */
+    gap: 10px;
+  }
+
+  .ord-btn {
+    width: 100%; /* Make buttons full width */
+  }
+}

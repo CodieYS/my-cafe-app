@@ -1,4 +1,3 @@
-// Offers.jsx
 import React from "react";
 import image from "../assets/card1.webp";
 
